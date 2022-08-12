@@ -10,7 +10,7 @@ RUN apt-get -qq install dialog apt-utils -y
 RUN apt-get -qq install -qq software-properties-common dirmngr -y
 RUN  apt-get install apt-transport-https -y
 # RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-key '95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7'
-RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
 RUN add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(env -i bash -c '. /etc/os-release; echo $VERSION_CODENAME')-cran40/"
 RUN apt-get update
 RUN apt-get install --no-install-recommends r-base -y --allow-unauthenticated
