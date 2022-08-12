@@ -66,7 +66,7 @@ jobs:
               echo "Defined VARS: PREV:$PREV  VERSION:$VERSION  NV_VERSION:$NV_VERSION"
               echo "" | docker login -u $DOCKER_USER  -p $DOCKER_PASS
               docker push "<< parameters.IMAGE >>:$VERSION"
-              docker tag "<< parameters.IMAGE >>:latest"
+              docker tag  "<< parameters.IMAGE >>:$VERSION" "<< parameters.IMAGE >>:latest"
               docker push "<< parameters.IMAGE >>:latest"
             fi
 
