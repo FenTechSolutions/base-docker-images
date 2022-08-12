@@ -18,22 +18,19 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          name: Define run environment variables
-          command: |
-            PREV=$(date +%Y-%m-15)
-            VERSION=$(date -d "$D" "+%y").$(date --date=$PREV-1month "+%m")
-            NV_VERSION=$VERSION-py3
-            echo "export PREV=$PREV">> $BASH_ENV
-            echo "export VERSION=$VERSION">> $BASH_ENV
-            echo "export NV_VERSION=$NV_VERSION">> $BASH_ENV
-            echo "Defined VARS: PREV:$PREV  VERSION:$VERSION  NV_VERSION:$NV_VERSION"
-            source $BASH_ENV
-      - run:
           name: Install dependencies
           command: |
             apk add --no-cache \
               py-pip=9.0.0-r1
-            pip install \
+            apk add --update coreutils
+      - run:
+          name: Define run environment variables
+          command: |
+            echo "export PREV=$(date +%Y-%m-15)">> $BASH_ENV
+            echo 'export VERSION=$(date -d "$D" "+%y").$(date --date=$PREV-1month "+%m")'>> $BASH_ENV
+            echo "export NV_VERSION=$VERSION-py3">> $BASH_ENV
+            source $BASH_ENV
+            echo "Defined VARS: PREV:$PREV  VERSION:$VERSION  NV_VERSION:$NV_VERSION"
       - restore_cache:
           keys:
             - v1-{{ .Branch }}
