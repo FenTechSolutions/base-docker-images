@@ -27,7 +27,7 @@ RUN sudo apt-get install libv8-dev  -y --allow-unauthenticated
 RUN sudo apt-get install libcurl4-openssl-dev -y --allow-unauthenticated
 RUN sudo apt-get install libgsl-dev -y
 RUN sudo apt-get install libxml2-dev -y --allow-unauthenticated
-RUN apt-get install libharfbuzz-dev libfribidi-dev libfontconfig1-dev -y --allow-unauthenticated
+RUN sudo apt-get install libharfbuzz-dev libfribidi-dev libfontconfig1-dev -y --allow-unauthenticated
 
 RUN sudo chmod -R 777 /usr/local/lib/R/
 RUN Rscript -e 'install.packages(c("usethis", "shiny"),repos="http://cran.irsn.fr", Ncpus=4)'
