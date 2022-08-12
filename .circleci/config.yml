@@ -47,7 +47,7 @@ jobs:
             echo "BASH_ENV: $BASH_ENV"
             source $BASH_ENV
             echo "Defined VARS: PREV:$PREV  VERSION:$VERSION  NV_VERSION:$NV_VERSION"
-            docker --log-level "error" build -q --build-arg BASEIMAGE=<< parameters.BASEIMAGE >> --build-arg VERSION="$NV_VERSION" --build-arg GITHUB_PAT="$GITHUB_PAT" -f dockerfiles/<< parameters.DOCKERFILE >> -t "<< parameters.IMAGE >>:${VERSION}" .
+            docker --log-level "error" build -q --build-arg BASEIMAGE=<< parameters.BASEIMAGE >> --build-arg VERSION="$NV_VERSION" --build-arg GITHUB_PAT="$GITHUB_PAT" -f << parameters.DOCKERFILE >> -t "<< parameters.IMAGE >>:${VERSION}" .
       # - run:
       #     name: Save Docker image layer cache
       #     command: |
