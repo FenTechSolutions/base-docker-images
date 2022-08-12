@@ -20,11 +20,14 @@ jobs:
       - run:
           name: Define run environment variables
           command: |
-            echo "export PREV=$(date +%Y-%m-15)">> $BASH_ENV
-            echo 'export VERSION=$(date -d "$D" "+%y").$(date --date=$PREV-1month "+%m")'>> $BASH_ENV
-            echo "export NV_VERSION=$VERSION-py3">> $BASH_ENV
+            PREV=$(date +%Y-%m-15)
+            VERSION=$(date -d "$D" "+%y").$(date --date=$PREV-1month "+%m")
+            NV_VERSION=$VERSION-py3
+            echo "export PREV=$PREV">> $BASH_ENV
+            echo "export VERSION=$VERSION">> $BASH_ENV
+            echo "export NV_VERSION=$NV_VERSION">> $BASH_ENV
+            echo "Defined VARS: PREV:$PREV  VERSION:$VERSION  NV_VERSION:$NV_VERSION"
             source $BASH_ENV
-            echo "Defined VARS: PREV:$PREV  VERSION:$VERSION NV_VERSION:$NV_VERSION"
       - run:
           name: Install dependencies
           command: |
