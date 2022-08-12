@@ -1,0 +1,77 @@
+version: 2
+jobs:
+  build-cdt:
+    parameters:
+        IMAGE:
+          type: string
+        DOCKERFILE:
+          type: string
+        BASEIMAGE:
+          type: string
+    working_directory: /cdt-env
+    docker:
+      - image: docker:17.05.0-ce-git
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+        name: Define run environment variables
+        command: |
+          echo "export PREV$(date +%Y-%m-15)">> $BASH_ENV
+          echo "export VERSION=$(date -d $D '+%y').$(date --date=$PREV-1month '+%m')">> $BASH_ENV
+          echo "export NV_VERSION=$VERSION-py3">> $BASH_ENV
+          source $BASH_ENV
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+              py-pip=9.0.0-r1
+            pip install \
+      - restore_cache:
+          keys:
+            - v1-{{ .Branch }}
+          paths:
+            - /caches/cdt-env.tar
+      - run:
+          name: Load Docker image layer cache
+          command: |
+            set +o pipefail
+            docker load -i /caches/cdt-env.tar | true
+      - run:
+          name: Build application Docker image
+          command: |
+            docker --log-level "error" build -q --build-arg BASEIMAGE="$BASEIMAGE" --build-arg VERSION="$NV_VERSION" --build-arg GITHUB_PAT="$GITHUB_PAT" -f dockerfiles/$DOCKERFILE -t $IMAGE:$VERSION .
+      - run:
+          name: Save Docker image layer cache
+          command: |
+            mkdir -p /caches
+            docker save -o /caches/cdt-env.tar cdt-env
+      - save_cache:
+          key: v1-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/cdt-env.tar
+     - deploy:
+          name: Push application Docker image
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "main" ]; then
+              # echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+              docker tag cdt-env "${ECR_ENDPOINT}/cdt-env-base:${CIRCLE_SHA1}"
+              docker push "${ECR_ENDPOINT}/cdt-env-base:${CIRCLE_SHA1}"
+              docker tag "${ECR_ENDPOINT}/cdt-env-base:${VERSION}"
+            fi
+
+
+workflows:
+  build-docker-images:
+    jobs:
+      - build-cdt:
+          IMAGE: fentechai/cdt-env-base
+          DOCKERFILE: cdt-env.dockerfile
+          BASEIMAGE: ubuntu
+      - build-cdt:
+          IMAGE: fentechai/nv-cdt-base
+          DOCKERFILE: nv-cdt-env.dockerfile
+          BASEIMAGE: nvcr.io/nvidia/pytorch
