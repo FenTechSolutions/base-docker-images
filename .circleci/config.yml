@@ -8,7 +8,7 @@ jobs:
         type: string
       BASEIMAGE:
         type: string
-    working_directory: /cdt-env
+    working_directory: /app
     docker:
       - image: docker:17.05.0-ce-git
         auth:
@@ -31,16 +31,16 @@ jobs:
             echo 'export NV_VERSION=$VERSION-py3'>> $BASH_ENV
             source $BASH_ENV
             echo "Defined VARS: PREV:$PREV  VERSION:$VERSION  NV_VERSION:$NV_VERSION"
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-          paths:
-            - /caches/cdt-env.tar
-      - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /caches/cdt-env.tar | true
+      # - restore_cache:
+      #     keys:
+      #       - v1-{{ .Branch }}
+      #     paths:
+      #       - /caches/app.tar
+      # - run:
+      #     name: Load Docker image layer cache
+      #     command: |
+      #       set +o pipefail
+      #       docker load -i /caches/app.tar | true
       - run:
           name: Build application Docker image
           command: |
@@ -48,15 +48,15 @@ jobs:
             source $BASH_ENV
             echo "Defined VARS: PREV:$PREV  VERSION:$VERSION  NV_VERSION:$NV_VERSION"
             docker --log-level "error" build -q --build-arg BASEIMAGE=<< parameters.BASEIMAGE >> --build-arg VERSION="$NV_VERSION" --build-arg GITHUB_PAT="$GITHUB_PAT" -f dockerfiles/<< parameters.DOCKERFILE >> -t "<< parameters.IMAGE >>:${VERSION}" .
-      - run:
-          name: Save Docker image layer cache
-          command: |
-            mkdir -p /caches
-            docker save -o /caches/cdt-env.tar cdt-env
-      - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
-          paths:
-            - /caches/cdt-env.tar
+      # - run:
+      #     name: Save Docker image layer cache
+      #     command: |
+      #       mkdir -p /caches
+      #       docker save -o /caches/app.tar cdt-env
+      # - save_cache:
+      #     key: v1-{{ .Branch }}-{{ epoch }}
+      #     paths:
+      #       - /caches/app.tar
       - deploy:
           name: Push application Docker image
           command: |
