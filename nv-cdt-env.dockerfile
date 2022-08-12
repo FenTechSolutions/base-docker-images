@@ -13,26 +13,26 @@ RUN  apt-get install apt-transport-https -y
 RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
 RUN add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(env -i bash -c '. /etc/os-release; echo $VERSION_CODENAME')-cran40/"
 RUN apt-get update
-RUN apt-get install build-essential gfortran gfortran-8 libauthen-sasl-perl libblas-dev libblas3
-  libdata-dump-perl libencode-locale-perl libfile-basedir-perl
-  libfile-desktopentry-perl libfile-listing-perl libfile-mimeinfo-perl
-  libfont-afm-perl libgfortran-8-dev libgfortran5 libhtml-form-perl
-  libhtml-format-perl libhtml-parser-perl libhtml-tagset-perl
-  libhtml-tree-perl libhttp-cookies-perl libhttp-daemon-perl libhttp-date-perl
-  libhttp-message-perl libhttp-negotiate-perl libio-html-perl
-  libio-socket-ssl-perl libio-stringy-perl libipc-system-simple-perl
-  liblapack-dev liblapack3 liblwp-mediatypes-perl liblwp-protocol-https-perl
-  libmailtools-perl libnet-dbus-perl libnet-http-perl libnet-smtp-ssl-perl
-  libnet-ssleay-perl libpaper-utils libpaper1 libpcre2-16-0 libpcre2-32-0
-  libpcre2-dev libpcre2-posix0 libtext-iconv-perl libtie-ixhash-perl
-  libtimedate-perl libtry-tiny-perl liburi-perl libwww-perl
-  libwww-robotrules-perl libx11-protocol-perl libxcb-shape0 libxcomposite1
-  libxcursor1 libxi6 libxinerama1 libxml-parser-perl libxml-twig-perl
-  libxml-xpathengine-perl libxrandr2 libxtst6 libxv1 libxxf86dga1
-  perl-openssl-defaults r-base-core r-base-dev r-base-html r-cran-boot
-  r-cran-class r-cran-cluster r-cran-codetools r-cran-foreign
-  r-cran-kernsmooth r-cran-lattice r-cran-mass r-cran-matrix r-cran-mgcv
-  r-cran-nlme r-cran-nnet r-cran-rpart r-cran-spatial r-cran-survival
+RUN apt-get install build-essential gfortran gfortran-8 libauthen-sasl-perl libblas-dev libblas3 \
+  libdata-dump-perl libencode-locale-perl libfile-basedir-perl \
+  libfile-desktopentry-perl libfile-listing-perl libfile-mimeinfo-perl \
+  libfont-afm-perl libgfortran-8-dev libgfortran5 libhtml-form-perl \
+  libhtml-format-perl libhtml-parser-perl libhtml-tagset-perl \
+  libhtml-tree-perl libhttp-cookies-perl libhttp-daemon-perl libhttp-date-perl \
+  libhttp-message-perl libhttp-negotiate-perl libio-html-perl \
+  libio-socket-ssl-perl libio-stringy-perl libipc-system-simple-perl \
+  liblapack-dev liblapack3 liblwp-mediatypes-perl liblwp-protocol-https-perl \
+  libmailtools-perl libnet-dbus-perl libnet-http-perl libnet-smtp-ssl-perl \
+  libnet-ssleay-perl libpaper-utils libpaper1 libpcre2-16-0 libpcre2-32-0 \
+  libpcre2-dev libpcre2-posix0 libtext-iconv-perl libtie-ixhash-perl \
+  libtimedate-perl libtry-tiny-perl liburi-perl libwww-perl \
+  libwww-robotrules-perl libx11-protocol-perl libxcb-shape0 libxcomposite1 \
+  libxcursor1 libxi6 libxinerama1 libxml-parser-perl libxml-twig-perl \
+  libxml-xpathengine-perl libxrandr2 libxtst6 libxv1 libxxf86dga1 \
+  perl-openssl-defaults r-base-core r-base-dev r-base-html r-cran-boot \
+  r-cran-class r-cran-cluster r-cran-codetools r-cran-foreign \
+  r-cran-kernsmooth r-cran-lattice r-cran-mass r-cran-matrix r-cran-mgcv \
+  r-cran-nlme r-cran-nnet r-cran-rpart r-cran-spatial r-cran-survival \
   r-doc-html r-recommended x11-utils x11-xserver-utils xdg-utils -y --allow-unauthenticated
 RUN apt-get install libssl-dev -y
 RUN apt-get install libgmp3-dev  -y --allow-unauthenticated
