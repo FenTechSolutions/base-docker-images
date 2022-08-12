@@ -65,9 +65,9 @@ jobs:
               source $BASH_ENV
               echo "Defined VARS: PREV:$PREV  VERSION:$VERSION  NV_VERSION:$NV_VERSION"
               echo "" | docker login -u $DOCKER_USER  -p $DOCKER_PASS
-              docker push "fentechai/<< parameters.IMAGE >>:$VERSION"
-              docker tag "fentechai/<< parameters.IMAGE >>:latest"
-              docker push "fentechai/<< parameters.IMAGE >>:latest"
+              docker push "<< parameters.IMAGE >>:$VERSION"
+              docker tag "<< parameters.IMAGE >>:latest"
+              docker push "<< parameters.IMAGE >>:latest"
             fi
 
 
