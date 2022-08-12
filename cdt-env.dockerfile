@@ -12,14 +12,13 @@ RUN sudo apt-get install apt-transport-https -y
 RUN sudo apt-get install libseccomp-dev seccomp -y
 RUN sudo apt-get install software-properties-common dirmngr -y
 RUN sudo apt-get update
-## No need for debian release
-# RUN sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key '95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7'
+RUN sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key '95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7'
 # RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
-# RUN sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/debian $(lsb_release -cs)-cran40/" -y
-# RUN sudo apt-get  update
+RUN sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/debian $(env -i bash -c '. /etc/os-release; echo $VERSION_CODENAME')-cran40/" -y
+RUN sudo apt-get  update
 
 
-RUN sudo apt-get install  r-base -y --allow-unauthenticated
+RUN sudo apt-get install -t buster-cran40 r-base -y --allow-unauthenticated
 RUN sudo apt-get install libssl-dev -y
 RUN sudo apt-get install libgmp3-dev  -y --allow-unauthenticated
 RUN sudo apt-get install git -y
@@ -28,10 +27,10 @@ RUN sudo apt-get install libv8-dev  -y --allow-unauthenticated
 RUN sudo apt-get install libcurl4-openssl-dev -y --allow-unauthenticated
 RUN sudo apt-get install libgsl-dev -y
 RUN sudo apt-get install libxml2-dev -y --allow-unauthenticated
-RUN sudo apt-get install libharfbuzz-dev libfribidi-dev -y --allow-unauthenticated
+RUN apt-get install libharfbuzz-dev libfribidi-dev libfontconfig1-dev -y --allow-unauthenticated
 
 RUN sudo chmod -R 777 /usr/local/lib/R/
-RUN Rscript -e 'install.packages(c("usethis"),repos="http://cran.irsn.fr", Ncpus=4)'
+RUN Rscript -e 'install.packages(c("usethis", "shiny"),repos="http://cran.irsn.fr", Ncpus=4)'
 RUN Rscript -e 'install.packages(c("Rcpp"),repos="http://cran.irsn.fr", Ncpus=4)'
 RUN Rscript -e 'install.packages(c("V8"),repos="http://cran.irsn.fr", Ncpus=4)'
 RUN Rscript -e 'install.packages(c("sfsmisc"),repos="http://cran.irsn.fr", Ncpus=4)'
