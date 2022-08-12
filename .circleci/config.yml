@@ -21,7 +21,9 @@ jobs:
           name: Define run environment variables
           command: |
             echo "export PREV$(date +%Y-%m-15)">> $BASH_ENV
+            source $BASH_ENV
             echo "export VERSION=$(date -d $D '+%y').$(date --date=$PREV-1month '+%m')">> $BASH_ENV
+            source $BASH_ENV
             echo "export NV_VERSION=$VERSION-py3">> $BASH_ENV
             source $BASH_ENV
       - run:
