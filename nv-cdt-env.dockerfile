@@ -43,4 +43,4 @@ RUN Rscript -e 'BiocManager::install(c("ccdrAlgorithm", "discretecdAlgorithm"), 
 RUN Rscript -e 'library(devtools); install_github("cran/CAM"); install_github("cran/momentchi2"); install_github("Diviyan-Kalainathan/RCIT")'
 RUN Rscript -e 'install.packages("https://cran.irsn.fr/src/contrib/Archive/sparsebn/sparsebn_0.1.2.tar.gz", repos=NULL, type="source", Ncpus=4)'
 
-MD /bin/sh
+CMD /bin/sh

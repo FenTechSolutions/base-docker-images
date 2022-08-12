@@ -9,14 +9,13 @@ RUN sudo apt-get -qq update
 RUN DEBIAN_FRONTEND=noninteractive sudo apt-get install -y tzdata
 RUN sudo apt-get -qq install dialog apt-utils -y
 RUN sudo apt-get install apt-transport-https -y
-RUN sudo apt-get install -qq software-properties-common dirmngr -y
+RUN sudo apt-get install -qq software-properties-common -y
 RUN sudo apt-get -qq update
 ## No need for debian release
 # RUN sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key '95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7'
 # RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
 # RUN sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/debian $(lsb_release -cs)-cran40/" -y
 # RUN sudo apt-get  update
-
 
 
 RUN sudo apt-get install  r-base -y --allow-unauthenticated
