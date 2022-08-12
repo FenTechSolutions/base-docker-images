@@ -74,7 +74,7 @@ workflows:
       - build:
           IMAGE: fentechai/cdt-env-base
           DOCKERFILE: cdt-env.dockerfile
-          BASEIMAGE: circleci/python:3.7-buster-node-browsers-legacy
+          BASEIMAGE: circleci/python:3.9-buster
       - build:
           IMAGE: fentechai/nv-cdt-base
           DOCKERFILE: nv-cdt-env.dockerfile
