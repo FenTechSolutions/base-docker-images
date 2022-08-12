@@ -18,16 +18,6 @@ RUN apt-get install build-essential gfortran gfortran-8 libauthen-sasl-perl libb
   libfile-desktopentry-perl libfile-listing-perl libfile-mimeinfo-perl \
   libfont-afm-perl libgfortran-8-dev libgfortran5 libhtml-form-perl \
   libhtml-format-perl libhtml-parser-perl libhtml-tagset-perl \
-  libhtml-tree-perl libhttp-cookies-perl libhttp-daemon-perl libhttp-date-perl \
-  libhttp-message-perl libhttp-negotiate-perl libio-html-perl \
-  libio-socket-ssl-perl libio-stringy-perl libipc-system-simple-perl \
-  liblapack-dev liblapack3 liblwp-mediatypes-perl liblwp-protocol-https-perl \
-  libmailtools-perl libnet-dbus-perl libnet-http-perl libnet-smtp-ssl-perl \
-  libnet-ssleay-perl libpaper-utils libpaper1 libpcre2-16-0 libpcre2-32-0 \
-  libpcre2-dev libpcre2-posix0 libtext-iconv-perl libtie-ixhash-perl \
-  libtimedate-perl libtry-tiny-perl liburi-perl libwww-perl \
-  libwww-robotrules-perl libx11-protocol-perl libxcb-shape0 libxcomposite1 \
-  libxcursor1 libxi6 libxinerama1 libxml-parser-perl libxml-twig-perl \
   libxml-xpathengine-perl libxrandr2 libxtst6 libxv1 libxxf86dga1 \
   perl-openssl-defaults r-base-core r-base-dev r-base-html r-cran-boot \
   r-cran-class r-cran-cluster r-cran-codetools r-cran-foreign \
