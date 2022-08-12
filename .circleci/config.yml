@@ -1,6 +1,6 @@
-version: 2
+version: 2.1
 jobs:
-  build-cdt:
+  build:
     parameters:
       IMAGE:
         type: string
@@ -18,12 +18,12 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-        name: Define run environment variables
-        command: |
-          echo "export PREV$(date +%Y-%m-15)">> $BASH_ENV
-          echo "export VERSION=$(date -d $D '+%y').$(date --date=$PREV-1month '+%m')">> $BASH_ENV
-          echo "export NV_VERSION=$VERSION-py3">> $BASH_ENV
-          source $BASH_ENV
+          name: Define run environment variables
+          command: |
+            echo "export PREV$(date +%Y-%m-15)">> $BASH_ENV
+            echo "export VERSION=$(date -d $D '+%y').$(date --date=$PREV-1month '+%m')">> $BASH_ENV
+            echo "export NV_VERSION=$VERSION-py3">> $BASH_ENV
+            source $BASH_ENV
       - run:
           name: Install dependencies
           command: |
@@ -53,7 +53,7 @@ jobs:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/cdt-env.tar
-     - deploy:
+      - deploy:
           name: Push application Docker image
           command: |
             if [ "${CIRCLE_BRANCH}" == "main" ]; then
@@ -67,11 +67,11 @@ jobs:
 workflows:
   build-docker-images:
     jobs:
-      - build-cdt:
+      - build:
           IMAGE: fentechai/cdt-env-base
           DOCKERFILE: cdt-env.dockerfile
           BASEIMAGE: ubuntu
-      - build-cdt:
+      - build:
           IMAGE: fentechai/nv-cdt-base
           DOCKERFILE: nv-cdt-env.dockerfile
           BASEIMAGE: nvcr.io/nvidia/pytorch
