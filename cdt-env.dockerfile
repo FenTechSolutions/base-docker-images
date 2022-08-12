@@ -9,8 +9,9 @@ RUN sudo apt-get -qq update
 RUN DEBIAN_FRONTEND=noninteractive sudo apt-get install -y tzdata
 RUN sudo apt-get -qq install dialog apt-utils -y
 RUN sudo apt-get install apt-transport-https -y
-RUN sudo apt-get install -qq software-properties-common -y
-RUN sudo apt-get -qq update
+RUN sudo apt-get install libseccomp-dev seccomp -y
+RUN sudo apt-get install software-properties-common dirmngr -y
+RUN sudo apt-get update
 ## No need for debian release
 # RUN sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key '95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7'
 # RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
@@ -19,15 +20,15 @@ RUN sudo apt-get -qq update
 
 
 RUN sudo apt-get install  r-base -y --allow-unauthenticated
-RUN sudo apt-get -qq install libssl-dev -y
-RUN sudo apt-get -qq install libgmp3-dev  -y --allow-unauthenticated
-RUN sudo apt-get -qq install git -y
-RUN sudo apt-get -qq install build-essential  -y --allow-unauthenticated
-RUN sudo apt-get -qq install libv8-dev  -y --allow-unauthenticated
-RUN sudo apt-get -qq install libcurl4-openssl-dev -y --allow-unauthenticated
-RUN sudo apt-get -qq install libgsl-dev -y
-RUN sudo apt-get -qq install libxml2-dev -y --allow-unauthenticated
-RUN sudo apt-get -qq install libharfbuzz-dev libfribidi-dev -y --allow-unauthenticated
+RUN sudo apt-get install libssl-dev -y
+RUN sudo apt-get install libgmp3-dev  -y --allow-unauthenticated
+RUN sudo apt-get install git -y
+RUN sudo apt-get install build-essential  -y --allow-unauthenticated
+RUN sudo apt-get install libv8-dev  -y --allow-unauthenticated
+RUN sudo apt-get install libcurl4-openssl-dev -y --allow-unauthenticated
+RUN sudo apt-get install libgsl-dev -y
+RUN sudo apt-get install libxml2-dev -y --allow-unauthenticated
+RUN sudo apt-get install libharfbuzz-dev libfribidi-dev -y --allow-unauthenticated
 
 RUN sudo chmod -R 777 /usr/local/lib/R/
 RUN Rscript -e 'install.packages(c("usethis"),repos="http://cran.irsn.fr", Ncpus=4)'
