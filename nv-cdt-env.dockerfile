@@ -12,16 +12,16 @@ RUN  apt-get install apt-transport-https -y
 # RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 # RUN add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu xenial-cran35/' -y
 # RUN apt-get -qq update
-RUN apt-get -qq install r-base -y --allow-unauthenticated
-RUN apt-get -qq install libssl-dev -y
-RUN apt-get -qq install libgmp3-dev  -y --allow-unauthenticated
-RUN apt-get -qq install git -y
-RUN apt-get -qq install build-essential  -y --allow-unauthenticated
-RUN apt-get -qq install libv8-dev  -y --allow-unauthenticated
-RUN apt-get -qq install libcurl4-openssl-dev -y --allow-unauthenticated
-RUN apt-get -qq install libopenblas-dev -y --allow-unauthenticated
-RUN apt-get -qq install libgsl-dev -y
-RUN apt-get -qq install libharfbuzz-dev libfribidi-dev -y --allow-unauthenticated
+RUN apt-get install r-base -y --allow-unauthenticated
+RUN apt-get install libssl-dev -y
+RUN apt-get install libgmp3-dev  -y --allow-unauthenticated
+RUN apt-get install git -y
+RUN apt-get install build-essential  -y --allow-unauthenticated
+RUN apt-get install libv8-dev  -y --allow-unauthenticated
+RUN apt-get install libcurl4-openssl-dev -y --allow-unauthenticated
+RUN apt-get install libopenblas-dev -y --allow-unauthenticated
+RUN apt-get install libgsl-dev -y
+RUN apt-get install libharfbuzz-dev libfribidi-dev -y --allow-unauthenticated
 
 RUN Rscript -e 'install.packages(c("usethis"),repos="http://cran.irsn.fr", Ncpus=4)'
 RUN Rscript -e 'install.packages(c("Rcpp"),repos="http://cran.irsn.fr", Ncpus=4)'
