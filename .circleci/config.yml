@@ -61,7 +61,7 @@ jobs:
           name: Push application Docker image
           command: |
             if [ "${CIRCLE_BRANCH}" == "main" ]; then
-              # echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+              echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
               docker push "fentechai/<< parameters.IMAGE >>:$VERSION"
               docker tag "fentechai/<< parameters.IMAGE >>:latest"
               docker push "fentechai/<< parameters.IMAGE >>:latest"

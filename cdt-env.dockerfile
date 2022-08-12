@@ -5,43 +5,50 @@ FROM $BASEIMAGE
 MAINTAINER Diviyan Kalainathan <diviyan@lri.fr>
 LABEL description="Docker image for the Causal Discovery Toolbox"
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get -qq update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
-RUN apt-get -qq install dialog apt-utils -y
-RUN apt-get install apt-transport-https -y
-RUN apt-get install -qq software-properties-common -y
-RUN apt-get -qq update
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
-RUN add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/' -y
-RUN apt-get -qq update
+RUN sudo apt-get -qq update
+RUN DEBIAN_FRONTEND=noninteractive sudo apt-get install -y tzdata
+RUN sudo apt-get -qq install dialog apt-utils -y
+RUN sudo apt-get install apt-transport-https -y
+RUN sudo apt-get install -qq software-properties-common dirmngr -y
+RUN sudo apt-get -qq update
+## No need for debian release
+# RUN sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key '95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7'
+# RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+# RUN sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/debian $(lsb_release -cs)-cran40/" -y
+# RUN sudo apt-get  update
 
-RUN apt-get -qq install r-base -y --allow-unauthenticated
-RUN apt-get -qq install libssl-dev -y
-RUN apt-get -qq install libgmp3-dev  -y --allow-unauthenticated
-RUN apt-get -qq install git -y
-RUN apt-get -qq install build-essential  -y --allow-unauthenticated
-RUN apt-get -qq install libv8-dev  -y --allow-unauthenticated
-RUN apt-get -qq install libcurl4-openssl-dev -y --allow-unauthenticated
-RUN apt-get -qq install libgsl-dev -y
 
-RUN Rscript -e 'install.packages(c("V8"),repos="http://cran.us.r-project.org", quiet=TRUE, verbose=FALSE)'
-RUN Rscript -e 'install.packages(c("sfsmisc"),repos="http://cran.us.r-project.org", quiet=TRUE, verbose=FALSE)'
-RUN Rscript -e 'install.packages(c("clue"),repos="http://cran.us.r-project.org", quiet=TRUE, verbose=FALSE)'
-RUN Rscript -e 'install.packages("https://cran.r-project.org/src/contrib/Archive/randomForest/randomForest_4.6-14.tar.gz", repos=NULL, type="source")'
-RUN Rscript -e 'install.packages(c("lattice"),repos="http://cran.us.r-project.org", quiet=TRUE, verbose=FALSE)'
-RUN Rscript -e 'install.packages(c("devtools"),repos="http://cran.us.r-project.org", quiet=TRUE, verbose=FALSE)'
-RUN Rscript -e 'install.packages(c("MASS"),repos="http://cran.us.r-project.org", quiet=TRUE, verbose=FALSE)'
-RUN Rscript -e 'install.packages("BiocManager")'
-RUN Rscript -e 'BiocManager::install(c("igraph"))'
-RUN Rscript -e 'install.packages("https://cran.r-project.org/src/contrib/Archive/fastICA/fastICA_1.2-2.tar.gz", repos=NULL, type="source")'
-RUN Rscript -e 'BiocManager::install(c("SID", "bnlearn", "pcalg", "kpcalg", "glmnet", "mboost"))'
-RUN Rscript -e 'install.packages("https://cran.r-project.org/src/contrib/Archive/CAM/CAM_1.0.tar.gz", repos=NULL, type="source")'
-RUN Rscript -e 'install.packages("https://cran.r-project.org/src/contrib/sparsebnUtils_0.0.8.tar.gz", repos=NULL, type="source")'
-RUN Rscript -e 'BiocManager::install(c("ccdrAlgorithm", "discretecdAlgorithm"))'
 
-RUN apt-get -qq install libxml2-dev -y --allow-unauthenticated
-RUN Rscript -e 'install.packages("devtools")'
-RUN Rscript -e 'library(devtools); install_github("cran/CAM"); install_github("cran/momentchi2"); install_github("Diviyan-Kalainathan/RCIT", quiet=TRUE, verbose=FALSE)'
-RUN Rscript -e 'install.packages("https://cran.r-project.org/src/contrib/Archive/sparsebn/sparsebn_0.1.2.tar.gz", repos=NULL, type="source")'
+RUN sudo apt-get install  r-base -y --allow-unauthenticated
+RUN sudo apt-get -qq install libssl-dev -y
+RUN sudo apt-get -qq install libgmp3-dev  -y --allow-unauthenticated
+RUN sudo apt-get -qq install git -y
+RUN sudo apt-get -qq install build-essential  -y --allow-unauthenticated
+RUN sudo apt-get -qq install libv8-dev  -y --allow-unauthenticated
+RUN sudo apt-get -qq install libcurl4-openssl-dev -y --allow-unauthenticated
+RUN sudo apt-get -qq install libgsl-dev -y
+RUN sudo apt-get -qq install libxml2-dev -y --allow-unauthenticated
+RUN sudo apt-get -qq install libharfbuzz-dev libfribidi-dev -y --allow-unauthenticated
+
+RUN sudo chmod -R 777 /usr/local/lib/R/
+RUN Rscript -e 'install.packages(c("usethis"),repos="http://cran.irsn.fr", Ncpus=4)'
+RUN Rscript -e 'install.packages(c("Rcpp"),repos="http://cran.irsn.fr", Ncpus=4)'
+RUN Rscript -e 'install.packages(c("V8"),repos="http://cran.irsn.fr", Ncpus=4)'
+RUN Rscript -e 'install.packages(c("sfsmisc"),repos="http://cran.irsn.fr", Ncpus=4)'
+RUN Rscript -e 'install.packages(c("clue"),repos="http://cran.irsn.fr", Ncpus=4)'
+RUN Rscript -e 'install.packages("https://cran.irsn.fr/src/contrib/Archive/randomForest/randomForest_4.6-14.tar.gz", repos=NULL, type="source", Ncpus=4)'
+RUN Rscript -e 'install.packages(c("lattice"),repos="http://cran.irsn.fr", Ncpus=4)'
+RUN Rscript -e 'install.packages(c("devtools"),repos="http://cran.irsn.fr", Ncpus=4)'
+RUN Rscript -e 'install.packages(c("MASS"),repos="http://cran.irsn.fr", Ncpus=4)'
+RUN Rscript -e 'install.packages("BiocManager", Ncpus=4)'
+RUN Rscript -e 'BiocManager::install(c("igraph"), Ncpus=4)'
+RUN Rscript -e 'install.packages("https://cran.irsn.fr/src/contrib/Archive/fastICA/fastICA_1.2-2.tar.gz", repos=NULL, type="source", Ncpus=4)'
+RUN Rscript -e 'BiocManager::install(c("SID", "bnlearn", "pcalg", "kpcalg", "glmnet", "mboost"), Ncpus=4)'
+RUN Rscript -e 'install.packages("https://cran.irsn.fr/src/contrib/Archive/CAM/CAM_1.0.tar.gz", repos=NULL, type="source", Ncpus=4)'
+RUN Rscript -e 'install.packages("https://cran.irsn.fr/src/contrib/sparsebnUtils_0.0.8.tar.gz", repos=NULL, type="source", Ncpus=4)'
+RUN Rscript -e 'BiocManager::install(c("ccdrAlgorithm", "discretecdAlgorithm"), Ncpus=4)'
+
+RUN Rscript -e 'library(devtools); install_github("cran/CAM"); install_github("cran/momentchi2"); install_github("Diviyan-Kalainathan/RCIT")'
+RUN Rscript -e 'install.packages("https://cran.irsn.fr/src/contrib/Archive/sparsebn/sparsebn_0.1.2.tar.gz", repos=NULL, type="source", Ncpus=4)'
 
 CMD /bin/sh
