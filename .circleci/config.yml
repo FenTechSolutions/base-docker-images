@@ -26,7 +26,7 @@ jobs:
       - run:
           name: Define run environment variables
           command: |
-            echo "export PREV=$(date +%Y-%m-15)">> $BASH_ENV
+            echo 'export PREV=$(date +%Y-%m-15)'>> $BASH_ENV
             echo 'export VERSION=$(date -d "$D" "+%y").$(date --date=$PREV-1month "+%m")'>> $BASH_ENV
             echo 'export NV_VERSION=$VERSION-py3'>> $BASH_ENV
             source $BASH_ENV
@@ -44,6 +44,8 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
+            echo "BASH_ENV: $BASH_ENV"
+            source $BASH_ENV
             echo "Defined VARS: PREV:$PREV  VERSION:$VERSION  NV_VERSION:$NV_VERSION"
             docker --log-level "error" build -q --build-arg BASEIMAGE=<< parameters.BASEIMAGE >> --build-arg VERSION="$NV_VERSION" --build-arg GITHUB_PAT="$GITHUB_PAT" -f dockerfiles/<< parameters.DOCKERFILE >> -t "<< parameters.IMAGE >>:${VERSION}" .
       - run:
