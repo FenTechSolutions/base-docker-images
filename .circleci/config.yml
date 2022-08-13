@@ -75,7 +75,7 @@ workflows:
   build-docker-images:
     jobs:
       - build:
-          IMAGE: fentechai/cdt-env-base
+          IMAGE: fentechai/cdt-base
           DOCKERFILE: cdt-env.dockerfile
           BASEIMAGE: circleci/python:3.9-buster
       - build:
