@@ -46,7 +46,8 @@ RUN sudo Rscript --vanilla -e 'BiocManager::install(c("bnlearn", "pcalg", "kpcal
 RUN sudo Rscript --vanilla -e 'install.packages("https://cran.irsn.fr/src/contrib/Archive/SID/SID_1.0.tar.gz", repos=NULL, type="source", Ncpus=4)'
 RUN sudo Rscript --vanilla -e 'install.packages("https://cran.irsn.fr/src/contrib/Archive/CAM/CAM_1.0.tar.gz", repos=NULL, type="source", Ncpus=4)'
 RUN sudo Rscript --vanilla -e 'install.packages("https://cran.irsn.fr/src/contrib/sparsebnUtils_0.0.8.tar.gz", repos=NULL, type="source", Ncpus=4)'
-RUN sudo Rscript --vanilla -e 'BiocManager::install(c("ccdrAlgorithm", "discretecdAlgorithm"), Ncpus=4)'
+RUN sudo Rscript --vanilla -e 'install.packages("https://cran.r-project.org/src/contrib/Archive/ccdrAlgorithm/ccdrAlgorithm_0.0.6.tar.gz", repos=NULL, type="source", Ncpus=4)'
+RUN sudo Rscript --vanilla -e 'BiocManager::install(c("discretecdAlgorithm"), Ncpus=4)'
 
 RUN sudo Rscript --vanilla -e 'library(devtools); install_github("cran/CAM"); install_github("cran/momentchi2"); install_github("Diviyan-Kalainathan/RCIT")'
 RUN sudo Rscript --vanilla -e 'install.packages("https://cran.irsn.fr/src/contrib/Archive/sparsebn/sparsebn_0.1.2.tar.gz", repos=NULL, type="source", Ncpus=4)'
